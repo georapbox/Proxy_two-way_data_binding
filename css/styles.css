@@ -1,0 +1,22 @@
+.commands {
+    list-style: none;
+    padding: 0;
+}
+
+.commands-item {
+    padding-bottom: 5px;
+}
+
+.highlight {
+    animation-name: highlight;
+    animation-duration: 0.8s;
+}
+
+.highlight:focus {
+    animation: none;
+}
+
+@keyframes highlight {
+    0% { box-shadow: 0px 0px 5px lime; }
+    100% { box-shadow: none; }
+}
