@@ -17,25 +17,25 @@
         <div class="row">
             <div class="col-sm-6">
                 <h3>Employee form</h3>
-                <form class="" action="" method="GET" id="form" autocomplete="off">
+                <form action="javascript:void(0);" method="GET" name="employeeForm" id="form" autocomplete="off">
                     <div class="form-group">
                         <label for="firstName_field">First name:</label>
-                        <input id="firstName_field" class="form-control" name="firstName" type="text" autofocus>
+                        <input id="firstName_field" class="form-control" name="firstName" type="text" autofocus required>
                     </div>
 
                     <div class="form-group">
                         <label for="lastName_field">Last name:</label>
-                        <input id="lastName_field" class="form-control" name="lastName" type="text">
+                        <input id="lastName_field" class="form-control" name="lastName" type="text" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email_field">Email:</label>
-                        <input id="email_field" class="form-control" name="email" type="email">
+                        <input id="email_field" class="form-control" name="email" type="email" required>
                     </div>
 
                     <div class="form-group">
                         <label for="position_field">Position:</label>
-                        <select id="position_field" class="form-control" name="position">
+                        <select id="position_field" class="form-control" name="position" required>
                             <option value="">-- Please select --</option>
                             <option value="Frontend Developer">Frontend Developer</option>
                             <option value="Backend Developer">Backend Developer</option>
@@ -69,8 +69,6 @@
                             <input id="active_field" type="checkbox" name="active" value="1"> Active
                         </label>
                     </div>
-
-                    <!-- <button id="submit" class="btn btn-primary" type="submit">Submit</button> -->
                 </form>
             </div>
 

@@ -24,6 +24,21 @@
         }, 1000);
     }
 
+    function onFormEvent(model, event) {
+        const field = event.target;
+        const fieldName = field.name;
+        const fieldValue = field.value;
+
+        switch (fieldName) {
+            case 'firstName': model.firstName = fieldValue.trim(); break;
+            case 'lastName': model.lastName = fieldValue.trim(); break;
+            case 'email': model.email = fieldValue.trim(); break;
+            case 'position': model.position = fieldValue.trim(); break;
+            case 'gender': model.gender = fieldValue.trim(); break;
+            case 'active': model.active = field.checked ? '1' : '0'; break;
+        }
+    }
+
     class Employee {
         constructor(firstName='', lastName='', email='', position='', gender='Male', active='0') {
             this.firstName = firstName;
@@ -102,15 +117,10 @@
 
     const employee = new Employee();
 
-    form.firstName.addEventListener('input', event => employee.firstName = event.target.value);
-    form.lastName.addEventListener('input', event => employee.lastName = event.target.value);
-    form.email.addEventListener('input', event => employee.email = event.target.value);
-    form.position.addEventListener('change', event => employee.position = event.target.value);
-    Array.from(form.gender).forEach(element => {
-        element.addEventListener('change', event => employee.gender = event.target.value);
-    });
-    form.active.addEventListener('change', event => employee.active = event.target.checked ? '1' : '0');
     previewEmployee(employee, preview);
+
+    form.addEventListener('input', onFormEvent.bind(this, employee), false);
+    form.addEventListener('change', onFormEvent.bind(this, employee), false);
 
     commands.addEventListener('click', event => {
         event.preventDefault();
