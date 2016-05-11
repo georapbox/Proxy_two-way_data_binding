@@ -7,9 +7,10 @@
         context[name] = definition();
     }
 }('employee', this, function () {
-    const form = document.getElementById('form');
-    const preview = document.getElementById('preview');
-    const commands = document.getElementById('commands');
+    const getById = id => document.getElementById(id);
+    const form = getById('form');
+    const preview = getById('preview');
+    const commands = getById('commands');
 
     function previewEmployee(obj, previewEl) {
         previewEl.textContent = JSON.stringify(obj, null, '  ');
@@ -32,8 +33,6 @@
             this.gender = gender;
             this.active = active;
 
-            console.info(arguments);
-
             const elementsNames = Array.from(form.elements).reduce((accum, current) => {
                 var name = current.name;
                 if (accum.indexOf(name) === -1) {
@@ -44,9 +43,9 @@
             }, []).filter(item => item !== '');
 
             const elementsMap = Object.keys(this).reduce((accum, current, index) => {
-                accum[current] = form[`${elementsNames[index]}`];
+                accum.set(current, form[`${elementsNames[index]}`]);
                 return accum;
-            }, {});
+            }, new Map());
 
             const proxy = new Proxy(this, {
                 get(target, key, receiver) {
@@ -55,6 +54,8 @@
                 },
                 set(target, key, value, receiver) {
                     console.log(`SET called for field: ${key} and value: ${value}`);
+
+                    const element = elementsMap.get(key);
 
                     if (typeof value !== 'string') {
                         throw new TypeError('Expected a string');
@@ -65,12 +66,12 @@
                     }
 
                     if (key === 'active') {
-                        elementsMap[key].checked = value === '1';
+                        element.checked = value === '1';
                     }
 
-                    elementsMap[key].value = `${value}`;
+                    element.value = `${value}`;
                     target[key] = value;
-                    highlightElement(elementsMap[key]);
+                    highlightElement(element);
                     previewEmployee(target, preview);
 
                     return Reflect.set(target, key, value, receiver);
@@ -99,7 +100,7 @@
         }
     }
 
-    let employee = new Employee();
+    const employee = new Employee();
 
     form.firstName.addEventListener('input', event => employee.firstName = event.target.value);
     form.lastName.addEventListener('input', event => employee.lastName = event.target.value);
